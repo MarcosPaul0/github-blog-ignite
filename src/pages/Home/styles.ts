@@ -6,12 +6,16 @@ export const HomeContainer = styled.main`
   padding: 0 1rem;
 `;
 
-export const SearchContainer = styled.div`
+export const SearchForm = styled.form`
   margin-top: 4.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.75rem;
+
+  > button {
+    visibility: hidden;
+  }
 `;
 
 export const SearchInfo = styled.div`
