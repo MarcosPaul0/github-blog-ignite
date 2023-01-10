@@ -10,7 +10,7 @@ export function Router() {
       <Route path={AppRoutes.HOME} element={<DefaultLayout />}>
         <Route path={AppRoutes.HOME} element={<Home />} />
         <Route
-          path={`${AppRoutes.PUBLICATION}/:id`}
+          path={`${AppRoutes.PUBLICATION}/:number`}
           element={<Publication />}
         />
       </Route>
