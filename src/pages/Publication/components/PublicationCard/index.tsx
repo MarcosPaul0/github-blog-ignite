@@ -1,4 +1,4 @@
-import { Link } from "../../../../components/Link";
+import { InternalLink } from "../../../../components/Link";
 import {
   InfoContainer,
   LinksContainer,
@@ -8,38 +8,59 @@ import { FaChevronLeft } from "react-icons/fa";
 import { HiExternalLink } from "react-icons/hi";
 import { FaGithub, FaCalendarDay, FaComment } from "react-icons/fa";
 import { AppRoutes } from "../../../../constants/appRoutes";
+import { formatDistance } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
-export function PublicationCard() {
+interface PublicationCardProps {
+  publication: {
+    title: string;
+    username: string;
+    url: string;
+    updatedAt: Date;
+    comments: number;
+  }
+}
+
+export function PublicationCard({ publication }: PublicationCardProps) {
+  const lastUpdateTimeFormatted = formatDistance(
+    publication.updatedAt,
+    new Date(),
+    {
+      locale: ptBR,
+
+    }
+  ).replace('cerca de', 'Há');
+
   return (
     <PublicationCardContainer>
       <LinksContainer>
-        <Link
+        <InternalLink
           href={AppRoutes.HOME}
           text="VOLTAR"
           prefixIcon={<FaChevronLeft />}
         />
-        <Link
-          href="sdfs"
+        <InternalLink
+          href={publication.url}
           text="GITHUB"
           suffixIcon={<HiExternalLink size={16} />}
         />
       </LinksContainer>
 
-      <h1>JavaScript data types and data structures</h1>
+      <h1>{publication.title}</h1>
 
       <InfoContainer>
         <span>
           <FaGithub size={18} />
-          MarcosPaul0
+          {publication.username}
         </span>
 
         <span>
           <FaCalendarDay size={18} />
-          Há 1 dia
+          {lastUpdateTimeFormatted}
         </span>
 
         <span>
-          <FaComment size={18} />2 comentários
+          <FaComment size={18} />{publication.comments} comentários
         </span>
       </InfoContainer>
     </PublicationCardContainer>
