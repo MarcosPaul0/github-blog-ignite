@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { LinkContainer } from "./styles";
+import { ExternalLinkContainer, InternalLinkContainer } from "./styles";
 
 interface LinkProps {
   text: string;
@@ -8,10 +8,18 @@ interface LinkProps {
   suffixIcon?: ReactElement;
 }
 
-export function Link({ href, text, prefixIcon, suffixIcon }: LinkProps) {
+export function InternalLink({ href, text, prefixIcon, suffixIcon }: LinkProps) {
   return (
-    <LinkContainer to={href}>
+    <InternalLinkContainer to={href}>
       {prefixIcon} {text} {suffixIcon}
-    </LinkContainer>
+    </InternalLinkContainer>
+  );
+}
+
+export function ExternalLink({ href, text, prefixIcon, suffixIcon }: LinkProps) {
+  return (
+    <ExternalLinkContainer href={href} target="_blank">
+      {prefixIcon} {text} {suffixIcon}
+    </ExternalLinkContainer>
   );
 }
