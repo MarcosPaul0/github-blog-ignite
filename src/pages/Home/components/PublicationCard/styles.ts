@@ -5,23 +5,23 @@ export const PublicationCardContainer = styled(Link)`
   ${({ theme }) => css`
     max-height: 16.25rem;
     height: 100%;
+    max-width: 26rem;
+    width: 100%;
     padding: 2rem;
     border-radius: 10px;
     background: ${theme.COLORS.GRAY_600};
     text-decoration: none;
     transition: box-shadow 0.2s;
+    overflow: hidden;
 
     &:hover {
       box-shadow: 0 0 0 2px ${theme.COLORS.GRAY_400};
     }
 
-    p {
+    > main {
       margin-top: 1.25rem;
       width: 100%;
       max-width: 26rem;
-      color: ${theme.COLORS.GRAY_200};
-      font-size: ${theme.FONTS.MD};
-      line-height: 160%;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
