@@ -1,4 +1,5 @@
-import { Link } from "../../../../components/Link";
+import { useEffect, useState } from "react";
+import { ExternalLink } from "../../../../components/Link";
 import {
   InfoContainer,
   ProfileCardContainer,
@@ -7,42 +8,75 @@ import {
 } from "./styles";
 import { FaGithub, FaBuilding, FaUserFriends } from "react-icons/fa";
 import { HiExternalLink } from "react-icons/hi";
+import { apiClient } from "../../../../services/apiClient";
+import { ApiRoutes } from "../../../../constants/apiRoutes";
+
+interface GithubUser {
+  login: string;
+  name: string;
+  bio: string;
+  html_url: string;
+  followers: number;
+  company: string;
+  avatar_url: string;
+}
 
 export function ProfileCard() {
+  const [githubProfile, setGithubProfile] = useState<GithubUser | null>(null);
+
+  useEffect(() => {
+    (async function getGithubProfile() {
+      const response = await apiClient.get<GithubUser>(
+        `${ApiRoutes.USERS}/${import.meta.env.VITE_GITHUB_BLOG_USERNAME}`
+      );
+
+      const { login, name, bio, html_url, followers, company, avatar_url } =
+        response.data;
+
+      setGithubProfile({
+        login,
+        name,
+        bio,
+        html_url,
+        followers,
+        company,
+        avatar_url,
+      });
+    })();
+  }, []);
+
   return (
     <ProfileCardContainer>
-      <img src="https://avatars.githubusercontent.com/u/64232527?v=4" />
+      <img src={githubProfile?.avatar_url} />
 
       <InfoContainer>
         <TitleContainer>
-          <h1>Marcos Paulo</h1>
-          <Link
-            href="dsfsdf"
+          <h1>{githubProfile?.name}</h1>
+          <ExternalLink
+            href={githubProfile?.html_url ? githubProfile?.html_url : "/"}
             text="GITHUB"
             suffixIcon={<HiExternalLink size={16} />}
           />
         </TitleContainer>
 
-        <p>
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-          viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat
-          pulvinar vel mass.
-        </p>
+        <p>{githubProfile?.bio}</p>
 
         <SocialContainer>
           <span>
             <FaGithub size={20} />
-            MarcosPaulo
+            {githubProfile?.login}
           </span>
 
-          <span>
-            <FaBuilding size={20} />
-            MarcosPaulo
-          </span>
-          
+          {githubProfile?.company && (
+            <span>
+              <FaBuilding size={20} />
+              {githubProfile?.company}
+            </span>
+          )}
+
           <span>
             <FaUserFriends size={24} />
-            20 seguidores
+            {githubProfile?.followers} seguidores
           </span>
         </SocialContainer>
       </InfoContainer>

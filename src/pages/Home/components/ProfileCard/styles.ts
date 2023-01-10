@@ -4,6 +4,8 @@ export const ProfileCardContainer = styled.div`
   ${({ theme }) => css`
     margin-top: -5.5rem;
     width: 100%;
+    max-height: 13.25rem;
+    height: 100%;
     padding: 2rem 2rem 2rem 2.5rem;
     background: ${theme.COLORS.GRAY_700};
     box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.2);
